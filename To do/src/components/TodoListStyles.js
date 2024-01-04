@@ -41,7 +41,7 @@ justify-content: center; align-items: center;
    
 
 `
-export const RenderList = styled.ul`
+export const RenderListStyle = styled.ul`
  gap: 3px; display: flex;
  justify-content: flex-start; 
  align-items: center;
@@ -66,4 +66,4 @@ button {
 }`
 
 
-export default TodoHeaderStyle; InputDisplay, RenderList
+export default TodoHeaderStyle; InputDisplay, RenderListStyle

@@ -1,11 +1,12 @@
 import React from 'react';
-import { TodoHeaderStyle, InputDisplay, RenderList} from './TodoListStyles';
-import { useState } from 'react';
+import { TodoHeaderStyle, RenderListStyle} from './TodoListStyles';
+import { useState,useEffect } from 'react';
+
 
 const TodoList = () => {
  
 const [input, setInput] = useState("");
-const [task, setTask] = useState([])
+const [task, setTask] = useState(JSON.parse(localStorage.getItem(`taskAdd`)) || [])
 const [check, setCheck] = useState(false)
 
 const handleClick = (e) => {
@@ -14,10 +15,13 @@ const handleClick = (e) => {
       todos: input,
       id: Math.random(),
     completed: check,
-     date: new Date().getHours(),
-    }]),
+     }]),
   setInput("")
+  
 }
+useEffect(() => {
+  localStorage.setItem( `taskAdd`, JSON.stringify(task))   
+},[task])
 
 const handleClickDelete = (pass) => { 
      let list = task.filter( newlist => {
@@ -39,12 +43,12 @@ const handleClickDelete = (pass) => {
       </TodoHeaderStyle>   
       { 
         task?.map( todo => {
-          const {id,date, todos} = todo;
+          const {id, todos} = todo;
 
-        return <RenderList key={id}>
-           <li >{todos}</li><input value={check} onChange={() => setCheck(!check)} type='checkbox'/>
+        return <RenderListStyle key={id}> 
+          <li>{todos}</li> <input completed={check} onChange={() => setCheck(!check)} type='checkbox'/>
             <button onClick={() => handleClickDelete(id)}>Delete</button>
-            </RenderList>
+            </RenderListStyle>
         })
 
       }
